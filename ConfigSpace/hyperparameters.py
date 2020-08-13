@@ -33,6 +33,7 @@ from collections import OrderedDict
 from typing import List, Any, Dict, Union, Tuple
 import io
 import numpy as np
+np.random.seed(0)
 
 
 class Hyperparameter(object, metaclass=ABCMeta):
@@ -770,6 +771,7 @@ class CategoricalHyperparameter(Hyperparameter):
         repr_str.seek(0)
         return repr_str.getvalue()
 
+
     def compare(self, value: Union[int, float, str], value2: Union[int, float, str]) -> int:
         if value == value2:
             return 0
@@ -797,7 +799,7 @@ class CategoricalHyperparameter(Hyperparameter):
             raise ValueError("Illegal default value %s" % str(default))
 
     def _sample(self, rs: np.random.RandomState, size: int = None) -> Union[int, np.ndarray]:
-        return rs.randint(0, self._num_choices, size=size)
+        return np.random.randint(0, self._num_choices, size=size)
 
     def _transform(self, vector: np.ndarray) -> Union[None, str, int, float]:
         if not np.isfinite(vector):

@@ -31,6 +31,7 @@ import copy
 from itertools import chain
 
 import numpy as np
+np.random.seed(0)
 import io
 
 import ConfigSpace.nx
@@ -69,7 +70,7 @@ class ConfigurationSpace(object):
         #  no guarantee that the parent of a condition was evaluated before
         self._conditionals = set()   # type: Set[str]
         self.forbidden_clauses = []  # type: List['AbstractForbiddenComponent']
-        self.random = np.random.RandomState(seed)
+        self.random = np.random.RandomState(0)
 
         self._children['__HPOlib_configuration_space_root__'] = OrderedDict()
 
@@ -981,7 +982,7 @@ class ConfigurationSpace(object):
             return accepted_configurations
 
     def seed(self, seed: int) -> None:
-        self.random = np.random.RandomState(seed)
+        self.random = np.random.RandomState(0)
 
 
 class Configuration(object):
@@ -1194,23 +1195,3 @@ class Configuration(object):
             continuous values are scaled between zero and one.
         """
         return self._vector
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
